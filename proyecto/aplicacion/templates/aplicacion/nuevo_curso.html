@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'aplicacion/index.html' %}
+
+{% block titulo %}
+<h1>Nuevo Curso</h1>
+{% endblock titulo %}
+
+
+{% block contenido %}
     <h1>El curso se ha creado correctamente</h1>
     <h2>Nombre {{curso}}</h2>
     <h2>Comision {{comision}}</h2>
-</body>
-</html>
+{% endblock contenido %}

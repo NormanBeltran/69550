@@ -1,0 +1,26 @@
+{% extends 'aplicacion/index.html' %}
+
+{% block titulo %}
+<h1>Reporte de cursos</h1>
+{% endblock titulo %}
+
+{% block contenido %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre de Curso</th>
+            <th>Comision</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for c in cursos  %}
+        <tr>
+            <td>{{ c.id }}</td>
+            <td>{{ c.nombre }}</td>
+            <td>{{ c.comision }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock contenido %}

@@ -15,6 +15,8 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        <!-- Font Awesome-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">      
     </head>
     <body>
         <!-- Navigation-->
@@ -23,9 +25,18 @@
                 <a class="navbar-brand" href="">Inicio</a>
                 <a class="navbar-brand" href="">Cursos</a>
                 <a class="navbar-brand" href="">Profesores</a>
-                <a class="navbar-brand" href="">Estudiantes</a>
+                <a class="navbar-brand" href="{% url 'estudiantes' %}">Estudiantes</a>
                 <a class="navbar-brand" href="">Entregables</a>
-                <a class="btn btn-primary" href="#signup">Sign Up</a>
+                
+                {% if user.is_authenticated %}
+                    <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+                    <p style="color:green"> [{{user.first_name}} {{user.last_name}}]</p>
+                {% else %}
+                    <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+                    <a class="btn btn-success" href="{% url 'registro' %}">Registrarse</a>
+                {% endif %}
+                                    
+
             </div>
         </nav>
         <!-- Masthead-->

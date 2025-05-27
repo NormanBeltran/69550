@@ -1,9 +1,16 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.urls import reverse_lazy
+from django.shortcuts import redirect
+
+
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import AuthenticationForm
 
 from .models import *
 from .forms import *
 import datetime, random 
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 # Create your views here.
 def saludo(request):
@@ -82,3 +89,50 @@ def cursoForm(request):
     else:
         form = CursoForm()
     return render(request, "aplicacion/curso_form.html", {"form": form})
+
+# _________________ CBV CRUD __________________
+
+class EstudianteList(ListView):
+    model = Estudiante
+
+class EstudianteCreate(CreateView):
+    model = Estudiante
+    fields = ["nombre", "apellido", "email"]    
+    success_url = reverse_lazy("estudiantes")
+
+class EstudianteUpdate(UpdateView):
+    model = Estudiante
+    fields = ["nombre", "apellido", "email"]
+    success_url = reverse_lazy("estudiantes")
+
+class EstudianteDelete(DeleteView):
+    model = Estudiante
+    success_url = reverse_lazy("estudiantes")        
+
+# _______________ Registracion / Login / Logout __________________
+
+def register(request):
+    if request.method == "POST":
+        miForm = RegistroForm(request.POST)
+        if miForm.is_valid():
+            miForm.save()
+            return redirect(reverse_lazy('bienvenido_tpl'))
+    else:
+        miForm = RegistroForm()
+
+    return render(request, "aplicacion/registro.html", {"form": miForm})   
+
+def loginRequest(request):
+    if request.method == "POST":
+        usuario = request.POST["username"]
+        clave = request.POST["password"]
+        user = authenticate(request, username=usuario, password=clave)
+        if user is not None:
+            login(request, user)
+            return render(request, "aplicacion/index.html")
+        else:
+            return redirect(reverse_lazy('login'))
+    else:
+        miForm = AuthenticationForm()
+
+    return render(request, "aplicacion/login.html", {"form": miForm})

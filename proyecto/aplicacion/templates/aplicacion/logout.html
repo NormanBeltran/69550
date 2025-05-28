@@ -1,9 +1,14 @@
 {% extends "aplicacion/index.html" %}
 
 
+{% block titulo %}
+<h1 class="mb-5">Logout</h1>                                
+{% endblock titulo %}
+
+
 {% block contenido %}   
-<form method="post" action="{% url 'logout' %}">
-  {% csrf_token %}
-  <button type="submit">Cerrar sesión</button>
+<form method="post" action="">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
 </form>
 {% endblock contenido %}

@@ -24,17 +24,21 @@
             <div class="container">
                 <a class="navbar-brand" href="">Inicio</a>
                 <a class="navbar-brand" href="">Cursos</a>
-                <a class="navbar-brand" href="">Profesores</a>
+                <a class="navbar-brand" href="{% url 'profesores' %}">Profesores</a>
                 <a class="navbar-brand" href="{% url 'estudiantes' %}">Estudiantes</a>
                 <a class="navbar-brand" href="">Entregables</a>
                 
                 {% if user.is_authenticated %}
-                    <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                    <a class="btn btn-primary" href="{% url 'perfil' %}">Perfil</a>
+                    <a class="btn btn-success" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+
+                    <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: none;">
                         {% csrf_token %}
-                        <button type="submit">Logout</button>
                     </form>
-                    
                     <p style="color:green"> [{{user.first_name}} {{user.last_name}}]</p>
+                                    <div class="text-center">
+                    <a href="{% url 'agregar_avatar' %}"><img src="{{ request.session.avatar }}" height="40px" weight="40px" alt="mi foto"></a>
+                </div>
                 {% else %}
                     <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
                     <a class="btn btn-success" href="{% url 'registro' %}">Registrarse</a>
